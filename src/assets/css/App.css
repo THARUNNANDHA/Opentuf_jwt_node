@@ -117,3 +117,76 @@ form>button:hover {
 .forgot_outer>form>h1 {
   text-align: center;
 }
+
+.outer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F5F7FA;
+}
+
+.logo_img {
+  display: flex;
+  align-items: center;
+  padding-left: 105px;
+}
+
+.logo_img>img {
+  width: 35px;
+  height: 24px;
+}
+
+.list_items {
+  display: flex;
+  gap: 50px;
+  padding-top: 20px;
+}
+
+.list_items {
+  list-style: none;
+}
+
+.login_button {
+
+  width: Hug (77px)px;
+  height: Hug (40px)px;
+  padding: 10px 20px 10px 20px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background-color: white;
+  color: #4CAF4F;
+  cursor: pointer;
+
+
+}
+
+.sign_button {
+  width: Hug (91px)px;
+  height: Hug (40px)px;
+  padding: 10px 20px 10px 20px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background-color: #4CAF4F;
+  color: white;
+  cursor: pointer;
+}
+
+.signin_login {
+  padding-right: 120px;
+  display: flex;
+  gap: 10px;
+
+}
+
+.login_button:hover {
+  background-color: #4CAF4F;
+  color: white;
+}
+
+.sign_button:hover {
+  background-color: white;
+  color: #4CAF4F;
+}

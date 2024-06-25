@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import "../assets/css/App.css";
 import { useNavigate } from 'react-router-dom'
-
+import Navbar from '../components/Navbar';
 
 function Signup() {
     // const [validated_state, setvalidated_state] = useState([])
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
-        name: '',
+        username: '',
         email: '',
         password: ''
     });
@@ -23,22 +23,27 @@ function Signup() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData)
-        navigate("/")
-        // axios.post('/signin', formData)
-        //     .then(response => {
-        //         if (response.data.fail) {
-        //             console.log(response.data.fail);
-        //             alert(response.data.fail);
-        //         }
-        //         else if (response.data.success) {
-        //             console.log(response.data.success);
-        //             alert(response.data.success);
-        //             navigate('/login');
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.error('Error sending data:', error);
-        //     });
+        if (formData.username != "" && formData.email != "" && formData.password != "") {
+
+            axios.post('http://localhost:5000/signup', formData)
+                .then(response => {
+                    if (response.data.fail) {
+                        console.log(response.data.fail);
+                        alert(response.data.fail);
+                    }
+                    else if (response.data.success) {
+                        console.log(response.data.success);
+                        alert(response.data.success);
+                        navigate('/home');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending data:', error.response.data);
+                });
+        }
+        else {
+            alert("fill all the data")
+        }
     }
 
     return (
@@ -46,7 +51,7 @@ function Signup() {
             <h1>Sign_up</h1>
             <form onSubmit={handleSubmit}>
                 <label>Name:</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} />
+                <input type="text" name="username" value={formData.username} onChange={handleChange} />
                 <label>Email:</label>
                 <input type="email" name="email" value={formData.email} onChange={handleChange} />
                 <label>Password</label>
