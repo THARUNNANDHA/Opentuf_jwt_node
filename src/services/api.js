@@ -20,10 +20,16 @@ export const refresh_token = async (token) => {
 export const signin = async (credentials) => {
     return await api.post('/signin', credentials);
 }
-
-export const fetchdata = async (api_to_get, accessToken) => {
-    console.log('Fetching data', accessToken)
-    return await api.post(api_to_get, accessToken);
+export const googlelogin = async (respons) => {
+    return await api.post('/googlelogin', { "respons": respons });
 }
 
-export default { login, signin, refresh_token, logout, fetchdata };
+
+// export const fetchdata = async (api_to_get, accessToken) => {
+//     return await api.post(api_to_get, accessToken);
+// }
+
+export const fetchdata = async (api_to_get, accessToken) => {
+    return await api.get(api_to_get, accessToken);
+}
+export default { login, signin, refresh_token, logout, fetchdata, googlelogin };

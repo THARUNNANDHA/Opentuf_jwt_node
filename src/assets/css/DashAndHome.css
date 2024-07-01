@@ -1,0 +1,45 @@
+.table {
+    width: 100%;
+    ;
+}
+
+.table>table {
+    width: 50%;
+    height: auto;
+    border-collapse: collapse;
+}
+
+.table>table>td,
+th,
+td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 5px;
+}
+
+.heading_below_carasole {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: Hug (76px)px;
+    gap: 8px;
+    margin: auto;
+
+}
+
+.outer_below_carasole {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.logos_below_carasole {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 144px;
+    padding-right: 144px;
+
+}

@@ -7,8 +7,10 @@ import icon from "../assets/images/Icon.png"
 import { useAuth } from '../context/authContext';
 export default function Navbar() {
     const navigate = useNavigate()
-    const { user, logout } = useAuth();
-    var logedin = user;
+    const { logout } = useAuth();
+    var logedin = localStorage.getItem("user");
+    var user_image = localStorage.getItem("user_image");
+    console.log(user_image)
     var admin = false;
 
     // console.log(user_data.email, user_data.password, user_data.name)
@@ -48,9 +50,14 @@ export default function Navbar() {
                     <Link to="/signup"><button className='login_button'>Sign up</button></Link>
                 </div>
                 }
-                {logedin && <div className='signin_login'>
-                    <button className='sign_button'>{ }</button>
-                    <button onClick={Logout} className='login_button'>logout</button>
+                {logedin && <div>
+
+
+                    <div className='signin_login'>
+                        <img src={user_image} alt="user_image" />
+                        <button className='sign_button'>{logedin}</button>
+                        <button onClick={Logout} className='login_button'>logout</button>
+                    </div>
                 </div>
                 }
             </div>

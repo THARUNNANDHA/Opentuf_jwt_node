@@ -4,10 +4,28 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from "react-router-dom";
 import { useAuth } from '../context/authContext';
 import Navbar from '../components/Navbar';
-
+import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleOneTapLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode'
+import google_signin from "../assets/images/image.png"
+import login_img from "../assets/images/Tablet_login_pana.png"
+import GoogleSignin from "../hooks/GoogleSignin"
 
 function Login() {
-    const { login, user } = useAuth();
+
+    const { login, setGoogleUserdata, GoogleUserdata } = useAuth();
+    // useGoogleOneTapLogin({
+    //     onSuccess: credentialResponse => {
+    //         console.log(jwtDecode(credentialResponse.credential));
+    //         setGoogleUserdata(jwtDecode(credentialResponse.credential))
+    //         console.log(GoogleUserdata)
+    //     },
+    //     onError: () => {
+    //         console.log('Login Failed');
+    //     },
+    // });
+
+
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         username: '',
@@ -45,27 +63,40 @@ function Login() {
             //     })
             //     .catch((error) => console.log(error));
         }
+
+
     };
+
+
+
 
     return (
         <div>
             <div>
                 <Navbar />
             </div>
-            <div className='Signup_outer'>
-                {/* {users.map(user=>(
+            <div className="img_form_signin">
+                <div className='login_img_div' >
+                    <img src={login_img} alt="login_img" />
+                </div>
+                <div className='Signup_outer'>
+                    {/* {users.map(user=>(
                         <h1>{user.username}</h1>
                     ))} */}
-                <h1>Login</h1>
-                <form onSubmit={handleSubmit}>
-                    <label>Email:</label>
-                    <input type="email" name="username" value={formData.username} onChange={handleChange} />
-                    <label>Password</label>
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} />
-                    <button type="submit">Submit</button>
-                </form>
-                <div className='forgot-signup'>
-                    <Link to="/signup">Signup</Link>
+                    <h1>Login</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label>Email:</label>
+                        <input type="email" name="username" value={formData.username} onChange={handleChange} />
+                        <label>Password</label>
+                        <input type="password" name="password" value={formData.password} onChange={handleChange} />
+                        <button type="submit">Submit</button>
+                    </form>
+                    <div className='forgot-signup'>
+                        <Link to="/signup">Signup</Link>
+                    </div>
+                    <div>
+                        <GoogleSignin />
+                    </div>
                 </div>
             </div>
         </div>
