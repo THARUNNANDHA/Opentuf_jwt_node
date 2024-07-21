@@ -7,7 +7,7 @@ export default function Dashboard() {
     const navigate = useNavigate()
     const [isLoading, setisLoading] = useState(true);
     const [user_cred, setuser_cred] = useState(null)
-    const { fetchdata } = useAuth()
+    const { fetchdata, cartToggled } = useAuth()
     var user_data = null;
     useEffect(() => {
         const fetchDatadash = async () => {
@@ -29,7 +29,7 @@ export default function Dashboard() {
             <div>
                 <Navbar />
             </div>
-            <div className="table">
+            <div className={`table ${cartToggled ? 'blur' : ''}`}>
                 <h1>inside dashboard</h1>
                 {isLoading ? (<p>loading</p>
                 ) : <table >

@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
     const [GoogleUserdata, setGoogleUserdata] = useState();
     const [accesstoken, setaccesstoken] = useState(null);
     var accessToken_dup;
-
+    const [cartToggled, setCartToggled] = useState(false);
     const login = async (credentials) => {
         try {
             const response = await api.login(credentials);
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
             // }
             // const response = await api.refresh_token(refreshToken);
             // localStorage.setItem('accessToken', newAccessToken);
-            console.log("hear", refreshToken)
+            console.log("refresh", refreshToken)
             const response = await api.refresh_token({ "refreshToken": refreshToken });
             const newAccessToken = response.data.accessToken;
             setaccesstoken(newAccessToken);
@@ -140,9 +140,8 @@ export const AuthProvider = ({ children }) => {
         console.log(google_res);
         // response = await api.googlelogin(google_res)
     }
-
     return (
-        <AuthContext.Provider value={{ login, logout, accesstoken, refreshAccessToken, fetchdata, accesstoken, setaccesstoken, googlelogin }}>
+        <AuthContext.Provider value={{ cartToggled, setCartToggled, login, logout, accesstoken, refreshAccessToken, fetchdata, accesstoken, setaccesstoken, googlelogin }}>
             {children}
         </AuthContext.Provider>
     )

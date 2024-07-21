@@ -10,7 +10,6 @@ export default function Homepage() {
         return <div>Loading...</div>;
     }
     return (
-
         <div>
             {user &&
                 <div>

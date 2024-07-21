@@ -7,8 +7,9 @@ import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode'
 import signin_img from "../assets/images/Sign_in_amico.png"
 import GoogleSignin from "../hooks/GoogleSignin"
-
+import { useAuth } from '../context/authContext';
 function Signup() {
+    const { cartToggled } = useAuth();
     const [GoogleUserdata, setGoogleUserdata] = useState()
     // const [validated_state, setvalidated_state] = useState([])
     const navigate = useNavigate()
@@ -56,7 +57,7 @@ function Signup() {
             <div>
                 <Navbar />
             </div>
-            <div className='img_form_signin'>
+            <div className={`img_form_signin ${cartToggled ? 'blur' : ''}`}>
                 <div className='login_img_div'>
                     <img src={signin_img} alt="signin_img" />
                 </div>

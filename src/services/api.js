@@ -23,13 +23,15 @@ export const signin = async (credentials) => {
 export const googlelogin = async (respons) => {
     return await api.post('/googlelogin', { "respons": respons });
 }
-
+export const change_password_otp = async (api_to_get, email) => {
+    return await api.post(api_to_get, email);
+}
 
 // export const fetchdata = async (api_to_get, accessToken) => {
 //     return await api.post(api_to_get, accessToken);
 // }
 
-export const fetchdata = async (api_to_get, accessToken) => {
-    return await api.get(api_to_get, accessToken);
+export const fetchdata = async (api_to_get, config) => {
+    return await api.get(api_to_get, config);
 }
-export default { login, signin, refresh_token, logout, fetchdata, googlelogin };
+export default { login, signin, refresh_token, logout, fetchdata, googlelogin, change_password_otp };

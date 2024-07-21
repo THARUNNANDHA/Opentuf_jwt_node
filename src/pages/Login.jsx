@@ -4,16 +4,16 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from "react-router-dom";
 import { useAuth } from '../context/authContext';
 import Navbar from '../components/Navbar';
-import { GoogleLogin } from '@react-oauth/google';
-import { useGoogleOneTapLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode'
-import google_signin from "../assets/images/image.png"
+// import { GoogleLogin } from '@react-oauth/google';
+// import { useGoogleOneTapLogin } from '@react-oauth/google';
+// import { jwtDecode } from 'jwt-decode'
+// import google_signin from "../assets/images/image.png"
 import login_img from "../assets/images/Tablet_login_pana.png"
 import GoogleSignin from "../hooks/GoogleSignin"
 
 function Login() {
 
-    const { login, setGoogleUserdata, GoogleUserdata } = useAuth();
+    const { login, setGoogleUserdata, GoogleUserdata, cartToggled } = useAuth();
     // useGoogleOneTapLogin({
     //     onSuccess: credentialResponse => {
     //         console.log(jwtDecode(credentialResponse.credential));
@@ -75,7 +75,7 @@ function Login() {
             <div>
                 <Navbar />
             </div>
-            <div className="img_form_signin">
+            <div className={`img_form_signin ${cartToggled ? 'blur' : ''}`}>
                 <div className='login_img_div' >
                     <img src={login_img} alt="login_img" />
                 </div>
@@ -93,6 +93,7 @@ function Login() {
                     </form>
                     <div className='forgot-signup'>
                         <Link to="/signup">Signup</Link>
+                        <Link to="/forgot_password">forgot_password</Link>
                     </div>
                     <div>
                         <GoogleSignin />

@@ -8,15 +8,20 @@ import { useAuth } from "../context/authContext"
 export default function GoogleSignin() {
     const { setaccesstoken } = useAuth()
     const handleSuccess = async (response) => {
-        console.log(response)
-        const result = await api.googlelogin(response.credential);
-        console.log(result.data)
-        setaccesstoken(result.data.accessToken);
-        localStorage.setItem('refreshToken', result.data.refreshToken);
-        localStorage.setItem('user', result.data.name);
-        localStorage.setItem('user_image', result.data.picture);
-        window.location.replace('/dashboard');
+        try {
+            console.log(response)
+            const result = await api.googlelogin(response.credential);
+            console.log(result.data)
+            setaccesstoken(result.data.accessToken);
+            localStorage.setItem('refreshToken', result.data.refreshToken);
+            localStorage.setItem('user', result.data.name);
+            localStorage.setItem('user_image', result.data.picture);
+            window.location.replace('/dashboard');
+        } catch (err) {
+            console.error(err)
+        }
     }
+
     return (
         <div>
             <GoogleLogin
@@ -24,7 +29,7 @@ export default function GoogleSignin() {
                 onError={() => {
                     console.log('failed to login');
                 }}
-            />;
+            />
         </div>
     )
 }

@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "./pages/Dashboard"
 import Home from "./pages/Home";
+import Forgotpassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/home" element={<Home />}></Route>
             <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/forgot_password" element={<Forgotpassword />}></Route>
             {/* <PrivateRoute path="/dashboard" element={<Dashboard />} /> */}
           </Routes>
         </BrowserRouter>
