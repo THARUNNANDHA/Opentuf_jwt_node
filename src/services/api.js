@@ -1,9 +1,17 @@
 import axios from "axios";
-
 axios.defaults.withCredentials = true;
 
 const api = axios.create({
     baseURL: 'http://localhost:5000'
+});
+
+api.interceptors.request.use((config) => {
+    if (config.accesstoken != null && !config.refreshToken) {
+        // console.log(config.accesstoken)
+        config.headers['Authorization'] = `Bearer ${config.accesstoken}`;
+        return config;
+    }
+    return config;
 });
 
 export const login = async (credentials) => {
@@ -34,4 +42,7 @@ export const change_password_otp = async (api_to_get, email) => {
 export const fetchdata = async (api_to_get, config) => {
     return await api.get(api_to_get, config);
 }
-export default { login, signin, refresh_token, logout, fetchdata, googlelogin, change_password_otp };
+export const fetchdataProduct = async (api_to_get, config) => {
+    return await api.get(api_to_get, config);
+}
+export default { login, signin, refresh_token, logout, fetchdata, googlelogin, change_password_otp, fetchdataProduct };

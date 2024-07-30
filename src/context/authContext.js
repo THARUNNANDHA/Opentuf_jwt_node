@@ -4,9 +4,8 @@ import api from "../services/api";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [GoogleUserdata, setGoogleUserdata] = useState();
+    const [cartItems, setCartItems] = useState(new Map());
     const [accesstoken, setaccesstoken] = useState(null);
-    var accessToken_dup;
     const [cartToggled, setCartToggled] = useState(false);
     const login = async (credentials) => {
         try {
@@ -49,7 +48,6 @@ export const AuthProvider = ({ children }) => {
             const response = await api.refresh_token({ "refreshToken": refreshToken });
             const newAccessToken = response.data.accessToken;
             setaccesstoken(newAccessToken);
-            accessToken_dup = newAccessToken;
             // console.log(accesstoken);
             return newAccessToken;
         } catch (err) {
@@ -95,15 +93,19 @@ export const AuthProvider = ({ children }) => {
             if (access == null) {
                 access = await refreshAccessToken()
             }
-            const response = await api.fetchdata(api_to_get, { headers: { 'Authorization': `Bearer ${access}` } });
-            return response.data
+            if (access != null) {
+                const response = await api.fetchdata(api_to_get, { "accesstoken": access });
+                return response.data
+            } else console.log("no accessToken")
         } catch (err) {
             console.error("error", err.response.data.fail)
             if (err.response.data.fail) {
                 access = await refreshAccessToken()
                 try {
-                    const response = await api.fetchdata(api_to_get, { headers: { 'Authorization': `Bearer ${access}` } });
-                    return response.data
+                    if (access != null) {
+                        const response = await api.fetchdata(api_to_get, { "accesstoken": access });
+                        return response.data
+                    } else console.log("no accessToken")
                 } catch (err) {
                     console.error(err)
                 }
@@ -141,7 +143,7 @@ export const AuthProvider = ({ children }) => {
         // response = await api.googlelogin(google_res)
     }
     return (
-        <AuthContext.Provider value={{ cartToggled, setCartToggled, login, logout, accesstoken, refreshAccessToken, fetchdata, accesstoken, setaccesstoken, googlelogin }}>
+        <AuthContext.Provider value={{ cartItems, setCartItems, cartToggled, setCartToggled, login, logout, accesstoken, refreshAccessToken, fetchdata, setaccesstoken, googlelogin }}>
             {children}
         </AuthContext.Provider>
     )

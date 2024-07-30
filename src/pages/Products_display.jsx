@@ -1,62 +1,85 @@
-import React, { useState, useEffect } from 'react';
-import Productdisplaycard from "./components/Productdisplaycard"
-// import im from "./images/rafiki.png"
-import Createitem from "./components/Createitem"
-import Navbar from './components/Navbar';
-import Checksession from './hooks/Checksession';
+import React, { useState, useEffect, useMemo } from 'react';
+import Productdisplaycard from "../components/Productdisplaycard";
+import Createitem from "../components/Createitem";
+import Navbar from '../components/Navbar';
+import "../assets/css/App.css";
+import api from '../services/api';
+import { useAuth } from '../context/authContext';
 
 export default function Products_display() {
-    const user_check = Checksession('/session_check');
+    const { accesstoken, refreshAccessToken, fetchdata } = useAuth();
     const [users, setUsers] = useState([]);
-    var user_exist = false
-    if (user_check.email == "admin@gmail.com") {
-        user_exist = true;
-    }
-    console.log("user_exists", user_exist)
+    var user_exist = false;
+    const refresh_tokne = localStorage.getItem('refreshToken');
+
+    // console.log("user_exists", user_exist);
+
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const response = await fetch("/product_item_data");
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const data = await response.json();
-                setUsers(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+            const data = await fetchdata("/product_data")
+            if (data != null) {
+                setUsers(data)
             }
+            // try {
+            //     var access = accesstoken;
+            //     if (access == null) {
+            //         access = await refreshAccessToken();
+            //     }
+            //     const response = await api.fetchdataProduct("/product_data", { headers: { 'Authorization': `Bearer ${access}` } });
+            //     setUsers(response.data);
+            //     console.log(response.data);
+            // } catch (err) {
+            //     console.error("error", err.response.data.fail);
+            //     if (err.response.data.fail) {
+            //         access = await refreshAccessToken();
+            //         try {
+            //             const response = await api.fetchdataProduct("/product_data", { headers: { 'Authorization': `Bearer ${access}` } });
+            //             setUsers(response.data);
+            //         } catch (err) {
+            //             console.error(err);
+            //         }
+            //     }
+            // }
         };
 
         fetchData();
     }, []);
 
-    const product_list = users.map(user => {
-        if (!user.image_src) {
-            // Handle case where image_src is undefined
-            return null; // Skip rendering this product card
+    const product_list = useMemo(() => {
+        if (!users) {
+            return null; // or return some default value or component
         }
-        return (
-            <Productdisplaycard
-                key={user.id}
-                src={require(`./images/${user.image_src}`)}
-                heading={user.title}
-                para={user.description}
-                price={user.price}
-                id={user.id}
-                admin={user_exist}
-            />
-        )
-    })
+        return users.map(user => {
+            if (!user.image_src) {
+                // Handle case where image_src is undefined
+                return null; // Skip rendering this product card
+            }
+            return (
+                <Productdisplaycard
+                    key={user.id}
+                    src={require(`../assets/images/${user.image_src}`)}
+                    heading={user.title}
+                    para={user.description}
+                    price={user.price}
+                    id={user.id}
+                    admin={user_exist}
+                    count={0}
+                />
+            );
+        });
+    }, [users]);
+
     return (
         <div>
-            <Navbar user_data={user_check} />
-            <div className='all_outer_product_data' >
-                {user_exist && <Createitem data={users} />}
-                <div className='outer_product_data'>
-                    {product_list}
+            <Navbar />
+            {refresh_tokne && users && (
+                <div className='all_outer_product_data'>
+                    <Createitem data={users} />
+                    <div className='outer_product_data'>
+                        {product_list}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
-
-    )
+    );
 }

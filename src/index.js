@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import "./assets/css/index.css";
 import App from './App';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 {/* <script src="https://kit.fontawesome.com/e3d1f6e2b9.js" crossorigin="anonymous"></script> */ }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

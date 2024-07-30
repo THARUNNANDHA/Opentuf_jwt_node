@@ -7,7 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "./pages/Dashboard"
 import Home from "./pages/Home";
 import Forgotpassword from "./pages/ForgotPassword";
-
+import Products_display from "./pages/Products_display";
 function App() {
   return (
     <div>
@@ -18,6 +18,7 @@ function App() {
             <Route path="/home" element={<Home />}></Route>
             <Route path="/dashboard" element={<Dashboard />}></Route>
             <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/product" element={<Products_display />}></Route>
             <Route path="/forgot_password" element={<Forgotpassword />}></Route>
             {/* <PrivateRoute path="/dashboard" element={<Dashboard />} /> */}
           </Routes>

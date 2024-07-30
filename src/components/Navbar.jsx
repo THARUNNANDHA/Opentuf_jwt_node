@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
+import { googleLogout } from '@react-oauth/google';
 import "../assets/css/App.css";
 // import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,7 @@ import { useAuth } from '../context/authContext';
 import cartImg from "../assets/images/cart_icon.jpg"
 export default function Navbar() {
     const navigate = useNavigate()
-    const { logout, cartToggled, setCartToggled } = useAuth();
+    const { logout, cartToggled, setCartToggled, setCartItems, cartItems } = useAuth();
     var logedin = localStorage.getItem("user");
     var user_image = localStorage.getItem("user_image");
     // console.log(user_image)
@@ -23,18 +24,47 @@ export default function Navbar() {
     // if (user_data.email === "admin@gmail.com") {
     //     admin = true;
     // }
+    const handleLogoutSuccess = () => {
+        console.log("Logout successful");
+    };
 
+    const handleLogoutError = () => {
+        console.log("Logout unsuccessful");
+    };
     const Logout = async () => {
         const res = await logout();
+        try {
+            googleLogout();
+            handleLogoutSuccess();
+        } catch (error) {
+            handleLogoutError();
+        }
         console.log(res);
         if (res) {
             navigate('/')
         }
     }
     const Cart = () => {
+        var totalprice = 0;
+        for (const [key, value] of cartItems.entries()) {
+            console.log(key + ": " + JSON.stringify(value));
+        }
+        const product = Array.from(cartItems).map(([key, value]) => {
+            totalprice += value.props.price * value.count;
+            return (
+                <div className="cart_items" key={key}>
+                    <p>{value.props.heading}</p>
+                    <p>{value.count}</p>
+                </div>
+            )
+        })
         return (
             <div className='cart_outer'>
-                <p>ulla</p>
+                <div>
+                    <p>Cart</p>
+                    {product}
+                    <p>Total  :{totalprice}</p>
+                </div>
             </div>
         )
     }
@@ -52,6 +82,7 @@ export default function Navbar() {
                     <ul className='list_items'>
                         <li><Link to="/Home">Home</Link></li>
                         <li><Link to="/dashboard">Dashboard</Link></li>
+                        <li><Link to="/product">Product</Link></li>
 
                         {admin && <li><Link to="/admin">Admin</Link></li>}
                     </ul>
