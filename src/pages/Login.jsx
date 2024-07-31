@@ -44,10 +44,16 @@ function Login() {
         console.log(formData);
         if (formData.email !== "" && formData.password !== "") {
             const res = await login(formData);
-            console.log(res);
-            if (res) {
-                navigate("/dashboard")
-            }
+            navigate(res)
+            // if (res.admin) {
+            //     localStorage.setItem('admin', res.admin)
+            //     navigate("/dashboard")
+            // }
+            // else if (res) {
+            //     navigate("/home")
+            // }
+
+
             // axios.post("http://localhost:5000/login", formData, { withCredentials: true })
             //     .then(response => {
             //         console.log("response", response.data)

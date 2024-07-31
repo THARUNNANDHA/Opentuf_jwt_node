@@ -12,8 +12,13 @@ export default function Navbar() {
     const { logout, cartToggled, setCartToggled, setCartItems, cartItems } = useAuth();
     var logedin = localStorage.getItem("user");
     var user_image = localStorage.getItem("user_image");
+    // console.log(user_image)/
     // console.log(user_image)
     var admin = false;
+    if(localStorage.getItem("admin")){
+        admin=localStorage.getItem("admin");
+        console.log(admin)
+    }
 
 
     // console.log(user_data.email, user_data.password, user_data.name)
@@ -31,6 +36,7 @@ export default function Navbar() {
     const handleLogoutError = () => {
         console.log("Logout unsuccessful");
     };
+
     const Logout = async () => {
         const res = await logout();
         try {
@@ -44,6 +50,7 @@ export default function Navbar() {
             navigate('/')
         }
     }
+
     const Cart = () => {
         var totalprice = 0;
         for (const [key, value] of cartItems.entries()) {
@@ -81,10 +88,10 @@ export default function Navbar() {
                 <div>
                     <ul className='list_items'>
                         <li><Link to="/Home">Home</Link></li>
-                        <li><Link to="/dashboard">Dashboard</Link></li>
+                        {admin && <li><Link to="/dashboard">Dashboard</Link></li>}
                         <li><Link to="/product">Product</Link></li>
 
-                        {admin && <li><Link to="/admin">Admin</Link></li>}
+                        {/* {admin && <li><Link to="/admin">Admin</Link></li>} */}
                     </ul>
                 </div>
 

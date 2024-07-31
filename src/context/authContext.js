@@ -10,14 +10,19 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         try {
             const response = await api.login(credentials);
+            console.log(response.data);
             const { accessToken, refreshToken, user } = response.data;
             console.log(accessToken, user, refreshToken)
             // localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
             setaccesstoken(accessToken);
             localStorage.setItem('user', user);
-            const result = true;
-            return result;
+            if (response.data.admin) {
+                localStorage.setItem('admin', response.data.admin)
+                // console.log("admin", response.admin)
+                return "/dashboard";
+            }
+            return "/home";
         } catch (err) {
             console.error("error login", err);
         }
@@ -30,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
         localStorage.removeItem('user_image');
-
+        localStorage.removeItem('admin');
         setaccesstoken(null);
         return true;
     }

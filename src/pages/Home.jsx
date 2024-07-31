@@ -5,8 +5,9 @@ import { useAuth } from "../context/authContext";
 import Belowcarasule from "../components/Belowcarasule";
 
 export default function Homepage() {
-    const user = localStorage.getItem("user");
-    if (user === null) {
+    var user = false
+    user = localStorage.getItem("user");
+    if (user === false) {
         return <div>Loading...</div>;
     }
     return (

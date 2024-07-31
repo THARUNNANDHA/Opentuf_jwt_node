@@ -9,6 +9,10 @@ export default function Dashboard() {
     const [user_cred, setuser_cred] = useState(null)
     const { fetchdata, cartToggled } = useAuth()
     var user_data = null;
+    var admin = false;
+    if (localStorage.getItem('admin')) {
+        admin = localStorage.getItem('admin');
+    }
     useEffect(() => {
         const fetchDatadash = async () => {
             try {
@@ -29,7 +33,7 @@ export default function Dashboard() {
             <div>
                 <Navbar />
             </div>
-            <div className={`table ${cartToggled ? 'blur' : ''}`}>
+            {admin && <div className={`table ${cartToggled ? 'blur' : ''}`}>
                 <h1>inside dashboard</h1>
                 {isLoading ? (<p>loading</p>
                 ) : <table >
@@ -51,7 +55,10 @@ export default function Dashboard() {
                         }) : <td>no data</td>}
                     </tbody>
                 </table>}
-            </div>
+            </div>}
+            {!admin && <div>
+                <p>You must be an admin to access this page</p>
+            </div>}
         </div>
     )
 }

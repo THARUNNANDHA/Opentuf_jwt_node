@@ -26,9 +26,10 @@ export default function Productdisplaycard(props) {
     return (
         <div className="outer_Productdisplaycard">
             <div className='card_Productdisplaycard'>
-                <div>
+                {props.admin && < div >
                     <Deleteitem id={props.id} />
-                    <Updateitems data={props} /></div>
+                    <Updateitems data={props} />
+                </div>}
                 <img src={props.src} alt="" />
                 <h2>{props.heading}</h2>
                 <p>{props.para}</p>
@@ -36,6 +37,6 @@ export default function Productdisplaycard(props) {
                 <button onClick={() => addItemCart(props)}>Add to cart</button>
             </div>
 
-        </div>
+        </div >
     )
 }

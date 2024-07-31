@@ -10,6 +10,9 @@ export default function Products_display() {
     const { accesstoken, refreshAccessToken, fetchdata } = useAuth();
     const [users, setUsers] = useState([]);
     var user_exist = false;
+    if (localStorage.getItem('admin')) {
+        user_exist = localStorage.getItem('admin');
+    }
     const refresh_tokne = localStorage.getItem('refreshToken');
 
     // console.log("user_exists", user_exist);
@@ -74,7 +77,7 @@ export default function Products_display() {
             <Navbar />
             {refresh_tokne && users && (
                 <div className='all_outer_product_data'>
-                    <Createitem data={users} />
+                    {user_exist && <Createitem data={users} />}
                     <div className='outer_product_data'>
                         {product_list}
                     </div>
