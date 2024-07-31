@@ -2,7 +2,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const api = axios.create({
-    baseURL: 'https://jwt-node-backend.vercel.app/'
+    baseURL: 'https://jwt-node-backend.vercel.app'
 });
 
 api.interceptors.request.use((config) => {
