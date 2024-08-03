@@ -15,9 +15,9 @@ export default function Navbar() {
     // console.log(user_image)/
     // console.log(user_image)
     var admin = false;
-    if (localStorage.getItem("admin")) {
-        admin = localStorage.getItem("admin");
-        // console.log(admin)
+    if(localStorage.getItem("admin")){
+        admin=localStorage.getItem("admin");
+        console.log(admin)
     }
 
 
