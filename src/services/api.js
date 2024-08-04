@@ -2,12 +2,14 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const api = axios.create({
+    baseURL: 'http://localhost:3000'
     // baseURL: 'http://localhost:5000'
-    baseURL: 'https://jwt-node-backend-v2.vercel.app'
+    // baseURL: 'https://jwt-node-backend-v2.vercel.app'
 
 });
 
 api.interceptors.request.use((config) => {
+    config.headers['Content-Type'] = 'application/json';
     if (config.accesstoken != null && !config.refreshToken) {
         // console.log(config.accesstoken)
         config.headers['Authorization'] = `Bearer ${config.accesstoken}`;

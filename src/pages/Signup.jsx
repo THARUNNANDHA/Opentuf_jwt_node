@@ -28,11 +28,16 @@ function Signup() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
-        if (formData.username !== "" && formData.email !== "" && formData.password !== "") {
+        console.log(formData);
 
-            axios.post('http://localhost:5000/signup', formData)
+        if (formData.username !== "" && formData.email !== "" && formData.password !== "") {
+            axios.post('http://localhost:5000/signup', formData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
                 .then(response => {
+                    console.log('Response:', response.data);
                     if (response.data.fail) {
                         console.log(response.data.fail);
                         alert(response.data.fail);
@@ -44,13 +49,14 @@ function Signup() {
                     }
                 })
                 .catch(error => {
-                    console.error('Error sending data:', error.response.data);
+                    console.error('Error sending data:', error.response ? error.response.data : error.message);
                 });
         }
         else {
-            alert("fill all the data")
+            alert("fill all the data");
         }
     }
+
 
     return (
         <div>
