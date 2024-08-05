@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
         } catch (err) {
             if (err.response) {
                 console.log(err.response.data)
-                if (err.response.data.fail) {
+                if (err.response.data.error) {
                     window.location.replace('/');
                     logout()
                     console.log("hear")
@@ -103,8 +103,8 @@ export const AuthProvider = ({ children }) => {
                 return response.data
             } else console.log("no accessToken")
         } catch (err) {
-            console.error("error", err.response.data.fail)
-            if (err.response.data.fail) {
+            console.error("error", err.response.data.error)
+            if (err.response.data.error) {
                 access = await refreshAccessToken()
                 try {
                     if (access != null) {

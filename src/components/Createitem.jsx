@@ -22,7 +22,7 @@ export default function Createitem(props) {
         e.preventDefault();
         const already_exist_name = props.data.some(user => user.title === formData.title);
         if (!already_exist_name) {
-            axios.post("http://localhost:5000/create_product_item", { "formData": formData })
+            axios.post("http://localhost:3000/create_product_item", { "formData": formData })
                 .then(response => {
                     console.log(response.data);
                 })

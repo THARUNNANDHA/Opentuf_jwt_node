@@ -25,7 +25,7 @@ export default function Updateitems(props) {
     }
     const handlesubmit = (e) => {
         e.preventDefault()
-        axios.post("http://localhost:5000/update_product", { "formData": formData })
+        axios.post("http://localhost:3000/update_product", { "formData": formData })
             .then(response => {
                 console.log(response.data)
             })

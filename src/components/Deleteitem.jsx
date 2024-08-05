@@ -5,7 +5,7 @@ import "../assets/css/App.css";
 export default function Deleteitem(props) {
     const del_id = () => {
         if (props.id) {
-            axios.post('http://localhost:5000/delete_product_items', { id: props.id })
+            axios.post('http://localhost:3000/delete_product_items', { id: props.id })
                 .then(response => {
                     console.log(response.data);
                 })
