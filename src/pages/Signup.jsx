@@ -31,7 +31,7 @@ function Signup() {
         console.log(formData);
 
         if (formData.username !== "" && formData.email !== "" && formData.password !== "") {
-            axios.post('http://localhost:5000/signup', formData, {
+            axios.post('http://localhost:3000/signup', formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

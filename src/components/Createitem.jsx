@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "../assets/css/App.css";
-import axios from 'axios';
+// import axios from 'axios';
+import api from '../services/api';
 
 export default function Createitem(props) {
     const [formData, setFormData] = useState({
@@ -18,21 +19,19 @@ export default function Createitem(props) {
         });
     };
 
-    const submit_changes = (e) => {
+    const submit_changes = async (e) => {
         e.preventDefault();
         const already_exist_name = props.data.some(user => user.title === formData.title);
-        if (!already_exist_name) {
-            axios.post("http://localhost:3000/create_product_item", { "formData": formData })
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.log("error", error);
-                });
-            alert("Created Successfully");
-            window.location.reload();
-        } else {
-            alert("Already exist title");
+        try {
+            if (!already_exist_name) {
+                const response = await api.product_changes("/create_product_item", { "formData": formData })
+                window.location.reload();
+            } else {
+                alert("Already exist title");
+            }
+        }
+        catch (err) {
+            console.log(err.response)
         }
     };
 

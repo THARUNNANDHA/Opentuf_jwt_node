@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../assets/css/App.css";
 import axios from "axios"
+import api from "../services/api";
 
 export default function Updateitems(props) {
     // console.log("id",props.data.id)
@@ -23,16 +24,15 @@ export default function Updateitems(props) {
             [e.target.name]: e.target.value
         })
     }
-    const handlesubmit = (e) => {
+    const handlesubmit = async (e) => {
         e.preventDefault()
-        axios.post("http://localhost:3000/update_product", { "formData": formData })
-            .then(response => {
-                console.log(response.data)
-            })
-            .catch(error => {
-                console.log("error", error)
-            })
-        window.location.reload();
+        try {
+            const response = await api.product_changes("/update_product", { "formData": formData })
+            window.location.reload();
+        }
+        catch (err) {
+            console.log(err.response)
+        }
     }
     return (
         <div>

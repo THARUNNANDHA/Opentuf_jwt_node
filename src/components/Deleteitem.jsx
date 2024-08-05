@@ -1,20 +1,18 @@
 import React from "react";
 import axios from 'axios';
 import "../assets/css/App.css";
+import api from "../services/api";
 
 export default function Deleteitem(props) {
-    const del_id = () => {
+    const del_id = async () => {
         if (props.id) {
-            axios.post('http://localhost:3000/delete_product_items', { id: props.id })
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.error('Error sending data:', error);
-                });
-            window.location.reload();
-            alert('Deleted successfully');
-            console.log(props.id);
+            try {
+                const response = await api.product_changes('/delete_product_items', { id: props.id })
+                window.location.reload();
+            }
+            catch (err) {
+                console.log(err.response)
+            }
         }
         else {
             console.log('No id Present');

@@ -49,4 +49,7 @@ export const fetchdata = async (api_to_get, config) => {
 export const fetchdataProduct = async (api_to_get, config) => {
     return await api.get(api_to_get, config);
 }
-export default { login, signin, refresh_token, logout, fetchdata, googlelogin, change_password_otp, fetchdataProduct };
+export const product_changes = async (api_to_get, config) => {
+    return await api.post(api_to_get, config);
+}
+export default { login, signin, refresh_token, logout, fetchdata, googlelogin, change_password_otp, fetchdataProduct, product_changes };
