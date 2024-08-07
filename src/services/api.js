@@ -3,8 +3,7 @@ axios.defaults.withCredentials = true;
 
 const api = axios.create({
     baseURL: 'https://jwt-node-backend.onrender.com'
-    // baseURL: 'http://localhost:5000'
-    // baseURL: 'https://jwt-node-backend-v2.vercel.app'
+    // baseURL: 'http://localhost:3000'
 
 });
 

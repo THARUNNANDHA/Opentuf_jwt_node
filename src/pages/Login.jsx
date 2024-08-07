@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "../assets/css/App.css";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useHis } from 'react-router-dom'
 import { Link } from "react-router-dom";
 import { useAuth } from '../context/authContext';
 import Navbar from '../components/Navbar';

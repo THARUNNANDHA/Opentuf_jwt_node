@@ -17,10 +17,13 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('refreshToken', refreshToken);
             setaccesstoken(accessToken);
             localStorage.setItem('user', user);
-            if (response.data.admin) {
-                localStorage.setItem('admin', response.data.admin)
+            if (response.data.role) {
+                if (response.data.role === 'admin') {
+                    localStorage.setItem('admin', true)
+                }
+                localStorage.setItem('role', response.data.role)
                 // console.log("admin", response.admin)
-                return "/dashboard";
+                return "/adminDashboard";
             }
             return "/home";
         } catch (err) {
@@ -36,6 +39,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('user');
         localStorage.removeItem('user_image');
         localStorage.removeItem('admin');
+        localStorage.removeItem('role');
         setaccesstoken(null);
         return true;
     }

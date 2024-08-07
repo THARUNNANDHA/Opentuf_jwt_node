@@ -3,7 +3,7 @@ import { useAuth } from "../context/authContext"
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../assets/css/DashAndHome.css"
-export default function Dashboard() {
+export default function AdminDashboard() {
     const navigate = useNavigate()
     const [isLoading, setisLoading] = useState(true);
     const [user_cred, setuser_cred] = useState(null)

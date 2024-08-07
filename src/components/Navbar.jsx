@@ -88,7 +88,7 @@ export default function Navbar() {
                 <div>
                     <ul className='list_items'>
                         <li><Link to="/Home">Home</Link></li>
-                        {admin && <li><Link to="/dashboard">Dashboard</Link></li>}
+                        {admin && <li><Link to="/adminDashboard">Dashboard</Link></li>}
                         <li><Link to="/product">Product</Link></li>
 
                         {/* {admin && <li><Link to="/admin">Admin</Link></li>} */}
