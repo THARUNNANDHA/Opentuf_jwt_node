@@ -15,8 +15,12 @@ export default function GoogleSignin() {
             setaccesstoken(result.data.accessToken);
             localStorage.setItem('refreshToken', result.data.refreshToken);
             localStorage.setItem('user', result.data.name);
+            localStorage.setItem('role', result.data.role);
             localStorage.setItem('user_image', result.data.picture);
-            window.location.replace('/dashboard');
+            if (result.data.role === 'admin') {
+                localStorage.setItem('admin', true)
+            }
+            window.location.replace('/adminDashboard');
         } catch (err) {
             console.error(err)
         }
