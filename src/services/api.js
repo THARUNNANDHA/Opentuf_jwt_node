@@ -2,7 +2,8 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const api = axios.create({
-    baseURL: 'https://jwt-node-backend.onrender.com'
+    baseURL: 'https://jwt-node-backend-production.up.railway.app'
+    // baseURL: 'https://jwt-node-backend.onrender.com'
     // baseURL: 'http://localhost:3000'
 
 });
