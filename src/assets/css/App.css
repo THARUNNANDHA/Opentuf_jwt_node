@@ -49,6 +49,7 @@
   margin-bottom: 30px;
   background-color: #4CAF4F;
   border-radius: 10px;
+  position: relative;
 }
 
 .Signup_outer>h1 {
@@ -561,4 +562,12 @@ form>button:hover {
   gap: 20px;
   flex-wrap: wrap;
 
+}
+
+.error_mess {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
 }

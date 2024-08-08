@@ -12,7 +12,7 @@ import login_img from "../assets/images/Tablet_login_pana.png"
 import GoogleSignin from "../hooks/GoogleSignin"
 
 function Login() {
-
+    const [message, setmessage] = useState(null)
     const { login, setGoogleUserdata, GoogleUserdata, cartToggled } = useAuth();
     // useGoogleOneTapLogin({
     //     onSuccess: credentialResponse => {
@@ -43,8 +43,13 @@ function Login() {
 
         console.log(formData);
         if (formData.email !== "" && formData.password !== "") {
-            const res = await login(formData);
-            navigate(res)
+            try {
+                const res = await login(formData);
+                navigate(res)
+            }
+            catch (err) {
+                setmessage(err.response.data.fail)
+            }
             // if (res.admin) {
             //     localStorage.setItem('admin', res.admin)
             //     navigate("/dashboard")
@@ -86,11 +91,13 @@ function Login() {
                     <img src={login_img} alt="login_img" />
                 </div>
                 <div className='Signup_outer'>
+                    {message && <p className='error_mess'>{message}</p>}
                     {/* {users.map(user=>(
                         <h1>{user.username}</h1>
                     ))} */}
                     <h1>Login</h1>
                     <form onSubmit={handleSubmit}>
+
                         <label>Email:</label>
                         <input type="email" name="username" value={formData.username} onChange={handleChange} />
                         <label>Password</label>
@@ -106,7 +113,7 @@ function Login() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

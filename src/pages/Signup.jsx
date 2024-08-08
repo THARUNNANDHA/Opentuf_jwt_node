@@ -8,9 +8,10 @@ import { jwtDecode } from 'jwt-decode'
 import signin_img from "../assets/images/Sign_in_amico.png"
 import GoogleSignin from "../hooks/GoogleSignin"
 import { useAuth } from '../context/authContext';
+import api from '../services/api';
 function Signup() {
     const { cartToggled } = useAuth();
-    const [GoogleUserdata, setGoogleUserdata] = useState()
+    const [message, setmessage] = useState()
     // const [validated_state, setvalidated_state] = useState([])
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
@@ -26,34 +27,48 @@ function Signup() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
 
         if (formData.username !== "" && formData.email !== "" && formData.password !== "") {
-            axios.post('http://localhost:3000/signup', formData, {
-                headers: {
-                    'Content-Type': 'application/json'
+            try {
+                const response = await api.signup('/signup', formData)
+                console.log('Response:', response);
+                if (response.data.success) {
+                    console.log(response.data.success);
+                    // alert(response.data.success, "success");
+                    navigate('/');
                 }
-            })
-                .then(response => {
-                    console.log('Response:', response.data);
-                    if (response.data.fail) {
-                        console.log(response.data.fail);
-                        alert(response.data.fail);
-                    }
-                    else if (response.data.success) {
-                        console.log(response.data.success);
-                        alert(response.data.success);
-                        navigate('/');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error sending data:', error.response ? error.response.data : error.message);
-                });
+            }
+            catch (err) {
+                // alert(err.response.data.fail, "error");
+                console.log(err.response.data.fail);
+                setmessage(err.response.data.fail);
+            }
+            // axios.post('http://localhost:3000/signup', formData, {
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     }
+            // })
+            //     .then(response => {
+            //         console.log('Response:', response.data);
+            //         if (response.data.fail) {
+            //             console.log(response.data.fail);
+            //             alert(response.data.fail);
+            //         }
+            //         else if (response.data.success) {
+            //             console.log(response.data.success);
+            //             alert(response.data.success);
+            //             navigate('/');
+            //         }
+            //     })
+            //     .catch(error => {
+            //         console.error('Error sending data:', error.response ? error.response.data : error.message);
+            //     });
         }
         else {
-            alert("fill all the data");
+            setmessage("fill all the data");
         }
     }
 
@@ -68,7 +83,9 @@ function Signup() {
                     <img src={signin_img} alt="signin_img" />
                 </div>
                 <div className='Signup_outer'>
+                    {message && <p className='error_mess'>{message}</p>}
                     <h1>Sign_up</h1>
+
                     <form onSubmit={handleSubmit}>
                         <label>Name:</label>
                         <input type="text" name="username" value={formData.username} onChange={handleChange} />

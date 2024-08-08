@@ -2,8 +2,8 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const api = axios.create({
-    baseURL: 'https://jwt-node-backend.onrender.com'
-    // baseURL: 'http://localhost:3000'
+    // baseURL: 'https://jwt-node-backend.onrender.com'
+    baseURL: 'http://localhost:3000'
 
 });
 
@@ -51,4 +51,7 @@ export const fetchdataProduct = async (api_to_get, config) => {
 export const product_changes = async (api_to_get, config) => {
     return await api.post(api_to_get, config);
 }
-export default { login, signin, refresh_token, logout, fetchdata, googlelogin, change_password_otp, fetchdataProduct, product_changes };
+export const signup = async (api_to_get, config) => {
+    return await api.post(api_to_get, config);
+}
+export default { signup, login, signin, refresh_token, logout, fetchdata, googlelogin, change_password_otp, fetchdataProduct, product_changes };
