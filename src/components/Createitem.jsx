@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import "../assets/css/App.css";
 // import axios from 'axios';
 import api from '../services/api';
+import { saveAs } from 'file-saver'
 
 export default function Createitem(props) {
+    const [uplodedImage, setuplodedImage] = useState()
     const [formData, setFormData] = useState({
         image_src: '',
+        image: null,
         description: '',
         price: 0,
         title: ''
@@ -13,10 +16,21 @@ export default function Createitem(props) {
     const [showForm, setShowForm] = useState(false);
 
     const changes_handler = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        if (e.target.name === 'image') {
+            const file = e.target.files[0];
+            console.log(file.name)
+            setuplodedImage(file)
+            setFormData({
+                ...formData,
+                image: file
+            })
+        }
+        else {
+            setFormData({
+                ...formData,
+                [e.target.name]: e.target.value
+            });
+        }
     };
 
     const submit_changes = async (e) => {
@@ -24,8 +38,10 @@ export default function Createitem(props) {
         const already_exist_name = props.data.some(user => user.title === formData.title);
         try {
             if (!already_exist_name) {
-                const response = await api.product_changes("/create_product_item", { "formData": formData })
-                window.location.reload();
+                // const response = await api.product_changes("/create_product_item", { "formData": formData })
+                // window.location.reload();
+                console.log(formData)
+                // saveAs(formData.image, formData.image.name);
             } else {
                 alert("Already exist title");
             }
@@ -62,6 +78,12 @@ export default function Createitem(props) {
                             <option value="pic_cara.png">pic_cara.png</option>
                             <option value="rafiki.png">rafiki.png</option>
                         </select>
+                        {/* <input type='file' name='image' onChange={changes_handler} />
+                        {uplodedImage && <img
+                            src={URL.createObjectURL(uplodedImage)}
+                            alt="Uploaded"
+                            style={{ maxWidth: '100%', height: 'auto' }}
+                        />} */}
                         <button type='submit'>Submit</button>
                     </form>
                 </div>
