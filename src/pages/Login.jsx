@@ -48,7 +48,14 @@ function Login() {
                 navigate(res)
             }
             catch (err) {
-                setmessage(err.response.data.fail)
+                if (err.message === "Network Error") {
+                    console.log(err.message);
+                    setmessage(err.message);
+                }
+                else {
+                    console.log(err.response.data.fail);
+                    setmessage(err.response.data.fail);
+                }
             }
             // if (res.admin) {
             //     localStorage.setItem('admin', res.admin)
@@ -74,6 +81,9 @@ function Login() {
             //     })
             //     .catch((error) => console.log(error));
         }
+        else {
+            setmessage("Enter all the data")
+        }
 
 
     };
@@ -86,30 +96,31 @@ function Login() {
             <div>
                 <Navbar />
             </div>
-            <div className={`img_form_signin ${cartToggled ? 'blur' : ''}`}>
-                <div className='login_img_div' >
-                    <img src={login_img} alt="login_img" />
-                </div>
-                <div className='Signup_outer'>
-                    {message && <p className='error_mess'>{message}</p>}
-                    {/* {users.map(user=>(
+            <div className='flex justify-center items-center'>
+                <div className={`flex justify-center items-center flex-col md:flex-row gap-5 mt-20 self-center mx-20 w-full ${cartToggled ? 'blur' : ''} `}>
+                    <div className='w-1/2 hidden md:block max-w-[500px] max-h-[500px] min-w-[400px] min-h-[400px]' >
+                        <img src={login_img} alt="login_img" />
+                    </div>
+                    <div className='shadow-custom-shadow w-full md:w-1/2 flex items-center justify-center flex-col bg-cusgreen px-2 py-5 mx-2 rounded-lg max-w-[400px] max-h-[400px] min-w-[330px]'>
+                        {message && <p className='text-red-600 font-bold'>{message}</p>}
+                        {/* {users.map(user=>(
                         <h1>{user.username}</h1>
                     ))} */}
-                    <h1>Login</h1>
-                    <form onSubmit={handleSubmit}>
-
-                        <label>Email:</label>
-                        <input type="email" name="username" value={formData.username} onChange={handleChange} />
-                        <label>Password</label>
-                        <input type="password" name="password" value={formData.password} onChange={handleChange} />
-                        <button type="submit">Submit</button>
-                    </form>
-                    <div className='forgot-signup'>
-                        <Link to="/signup">Signup</Link>
-                        <Link to="/forgot_password">forgot_password</Link>
-                    </div>
-                    <div>
-                        <GoogleSignin />
+                        <h1 className="font-sans font-bold text-white text-3xl">Login</h1>
+                        <form onSubmit={handleSubmit}>
+                            <label className='font-sans'>Email:</label>
+                            <input type="email" name="username" value={formData.username} onChange={handleChange} />
+                            <label className='font-sans'>Password</label>
+                            <input type="password" name="password" value={formData.password} onChange={handleChange} />
+                            <button type="submit">Submit</button>
+                        </form>
+                        <div className='forgot-signup'>
+                            <Link to="/signup">Signup</Link>
+                            <Link to="/forgot_password">forgot_password</Link>
+                        </div>
+                        <div>
+                            <GoogleSignin />
+                        </div>
                     </div>
                 </div>
             </div>

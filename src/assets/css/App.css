@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 .App {
   text-align: center;
 }
@@ -175,7 +180,7 @@ form>button:hover {
 }
 
 .signin_login {
-  padding-right: 120px;
+  padding-right: 20px;
   display: flex;
   gap: 10px;
 
@@ -203,6 +208,7 @@ form>button:hover {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  width: 100vw;
 
 }
 
@@ -284,10 +290,6 @@ form>button:hover {
 }
 
 .cart_icon {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  box-shadow: 1px 2px 5px #888888;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 

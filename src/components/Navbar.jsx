@@ -7,8 +7,12 @@ import { useNavigate } from "react-router-dom";
 import icon from "../assets/images/Icon.png"
 import { useAuth } from '../context/authContext';
 import cartImg from "../assets/images/cart_icon.jpg"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+
 export default function Navbar() {
     const navigate = useNavigate()
+    const [menu, setMenu] = useState(false)
     const { logout, cartToggled, setCartToggled, setCartItems, cartItems } = useAuth();
     var logedin = localStorage.getItem("user");
     var user_image = localStorage.getItem("user_image");
@@ -50,6 +54,29 @@ export default function Navbar() {
             navigate('/')
         }
     }
+    const Sidebar = () => {
+        return (
+            <div className='relative z-10'>
+                <div className=' absolute right-0 max-h-[400px] w-[300px] bg-black flex justify-center items-center transition-all duration-500 ease-in-out'>
+                    <ul className='flex gap-5 flex-col py-2'>
+                        {logedin && <li className='text-cusgreen font-medium hover:text-black'>
+                            <div className='flex flex-row gap-5 items-center'>
+                                <img className='max-w-[50px] rounded-[50%]' src={user_image} alt="" />
+                                <p>{logedin}</p>
+                            </div>
+                        </li>}
+                        <li className='text-cusgreen font-medium hover:text-black'><Link to="/Home">Home</Link></li>
+                        {admin && <li className='text-cusgreen font-medium hover:text-black'><Link to="/adminDashboard">Dashboard</Link></li>}
+                        <li className='text-cusgreen font-medium hover:text-black'><Link to="/product">Product</Link></li>
+                        {!logedin && <li className='text-cusgreen font-medium hover:text-black'><Link to="/">Login</Link></li>}
+                        {!logedin && <li className='text-cusgreen font-medium hover:text-black'><Link to="/signup">Sign up</Link></li>}
+                        {logedin && <li className='text-cusgreen font-medium hover:text-black' onClick={Logout}>Logout</li>}
+                        {/* {admin && <li><Link to="/admin">Admin</Link></li>} */}
+                    </ul>
+                </div>
+            </div>
+        )
+    }
 
     const Cart = () => {
         var totalprice = 0;
@@ -75,45 +102,63 @@ export default function Navbar() {
             </div>
         )
     }
+
+
+    const Togglesidebar = () => {
+        setMenu(!menu)
+    }
     const setCart = () => {
         setCartToggled(!cartToggled);
     }
     return (
         <div>
-            <div className="outer">
-                <div className='logo_img'>
+            <div className="flex flex-row justify-between items-center bg-[#F5F7FA]">
+                <div className='flex pl-4'>
                     <img src={icon} alt="" />
                     <h3>Nexcent</h3>
                 </div>
-                <div>
-                    <ul className='list_items'>
-                        <li><Link to="/Home">Home</Link></li>
-                        {admin && <li><Link to="/adminDashboard">Dashboard</Link></li>}
-                        <li><Link to="/product">Product</Link></li>
+                <div className='hidden md:flex'>
+                    <ul className='flex gap-16 flex-row'>
+                        <li className='text-cusgreen font-medium hover:text-black'><Link to="/Home">Home</Link></li>
+                        {admin && <li className='text-cusgreen font-medium hover:text-black'><Link to="/adminDashboard">Dashboard</Link></li>}
+                        <li className='text-cusgreen font-medium hover:text-black'><Link to="/product">Product</Link></li>
+
 
                         {/* {admin && <li><Link to="/admin">Admin</Link></li>} */}
                     </ul>
                 </div>
 
-                {!logedin && <div className='signin_login'>
-                    <Link to="/"><button className='sign_button'>Login</button></Link>
-                    <Link to="/signup"><button className='login_button'>Sign up</button></Link>
-                    <img className="cart_icon" onClick={setCart} src={cartImg} alt="cart" />
-                </div>
+
+                {!logedin &&
+                    <div className='flex float-end'>
+                        <div className='hidden md:flex gap-4 py-2 pr-5'>
+                            <Link to="/"><button className='bg-cusgreen px-6 py-2 mt-1 rounded-lg text-white hover:text-cusgreen hover:bg-white hover:shadow-lg'>Login</button></Link>
+                            <Link to="/signup"><button className='bg-white shadow-lg px-4 py-2 mt-1 rounded-lg text-cusgreen hover:text-white hover:bg-cusgreen'>Sign up</button></Link>
+                        </div>
+                        <div className='pr-6 pt-4 flex flex-row gap-2 items-center justify-center p-2'>
+                            <img className="transition max-w-[50px] max-h-[50px] shadow-lg rounded-[50%] hover:cursor-pointer" onClick={setCart} src={cartImg} alt="cart" />
+                            <FontAwesomeIcon icon={faBars} className='block md:hidden text-cusgreen font-bold text-2xl hover:cursor-pointer shadow-lg' onClick={Togglesidebar} />
+                        </div>
+                    </div>
                 }
-                {logedin && <div>
-                    <div className='signin_login'>
-                        <img src={user_image} alt="user_image" />
-                        <button className='sign_button'>{logedin}</button>
-                        <button onClick={Logout} className='login_button'>logout</button>
+                {logedin && <div className='flex flex-row '>
+                    <div className='hidden md:flex flex-row flex-end gap-2 p-2 pr-4'>
+                        <img className="max-w-[45px] max-h-[45px] rounded-[50%]" src={user_image} alt="user_image" />
+                        <button className='bg-cusgreen px-6 py-2 mt-1 rounded-lg text-white hover:text-cusgreen hover:bg-white hover:shadow-lg'>{logedin}</button>
+                        <button onClick={Logout} className='bg-white shadow-lg px-4 py-2 mt-1 rounded-lg text-cusgreen hover:text-white hover:bg-cusgreen'>logout</button>
                         {/* <Link to="/signup" className="cart_icon">Cart</Link> */}
-                        <img className="cart_icon" onClick={setCart} src={cartImg} alt="cart" />
+                        {/* <img className="transition max-w-[50px] max-h-[50px] shadow-lg rounded-[50%] hover:cursor-pointer" onClick={setCart} src={cartImg} alt="cart" /> */}
+                    </div>
+                    <div className='pr-6 pt-4 flex flex-row gap-2 items-center justify-center p-2'>
+                        <img className="transition max-w-[50px] max-h-[50px] shadow-lg rounded-[50%] hover:cursor-pointer" onClick={setCart} src={cartImg} alt="cart" />
+                        <FontAwesomeIcon icon={faBars} className='block md:hidden text-cusgreen font-bold text-2xl hover:cursor-pointer shadow-lg ' onClick={Togglesidebar} />
                     </div>
                 </div>
                 }
             </div>
             <Outlet />
             {cartToggled && <Cart />}
+            {menu && <Sidebar />}
         </div>
     );
 }
