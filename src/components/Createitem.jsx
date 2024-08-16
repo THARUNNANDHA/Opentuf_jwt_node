@@ -38,8 +38,8 @@ export default function Createitem(props) {
         const already_exist_name = props.data.some(user => user.title === formData.title);
         try {
             if (!already_exist_name) {
-                // const response = await api.product_changes("/create_product_item", { "formData": formData })
-                // window.location.reload();
+                const response = await api.product_changes("/create_product_item", { "formData": formData })
+                window.location.reload();
                 console.log(formData)
                 // saveAs(formData.image, formData.image.name);
             } else {

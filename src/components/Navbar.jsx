@@ -13,7 +13,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 export default function Navbar() {
     const navigate = useNavigate()
     const [menu, setMenu] = useState(false)
-    const { logout, cartToggled, setCartToggled, setCartItems, cartItems } = useAuth();
+    const { logout, cartToggled, setCartToggled, cartItems } = useAuth();
     var logedin = localStorage.getItem("user");
     var user_image = localStorage.getItem("user_image");
     // console.log(user_image)/
@@ -65,12 +65,12 @@ export default function Navbar() {
                                 <p>{logedin}</p>
                             </div>
                         </li>}
-                        <li className='text-cusgreen font-medium hover:text-black'><Link to="/Home">Home</Link></li>
-                        {admin && <li className='text-cusgreen font-medium hover:text-black'><Link to="/adminDashboard">Dashboard</Link></li>}
-                        <li className='text-cusgreen font-medium hover:text-black'><Link to="/product">Product</Link></li>
-                        {!logedin && <li className='text-cusgreen font-medium hover:text-black'><Link to="/">Login</Link></li>}
-                        {!logedin && <li className='text-cusgreen font-medium hover:text-black'><Link to="/signup">Sign up</Link></li>}
-                        {logedin && <li className='text-cusgreen font-medium hover:text-black' onClick={Logout}>Logout</li>}
+                        <li className='text-cusgreen font-medium hover:text-white'><Link to="/Home">Home</Link></li>
+                        {admin && <li className='text-cusgreen font-medium hover:text-white'><Link to="/adminDashboard">Dashboard</Link></li>}
+                        <li className='text-cusgreen font-medium hover:text-white'><Link to="/product">Product</Link></li>
+                        {!logedin && <li className='text-cusgreen font-medium hover:text-white'><Link to="/">Login</Link></li>}
+                        {!logedin && <li className='text-cusgreen font-medium hover:text-white'><Link to="/signup">Sign up</Link></li>}
+                        {logedin && <li className='text-cusgreen font-medium hover:text-white' onClick={Logout}>Logout</li>}
                         {/* {admin && <li><Link to="/admin">Admin</Link></li>} */}
                     </ul>
                 </div>
