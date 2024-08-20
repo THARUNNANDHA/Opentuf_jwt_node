@@ -56,21 +56,21 @@ export default function Navbar() {
     }
     const Sidebar = () => {
         return (
-            <div className='relative z-10'>
-                <div className=' absolute right-0 max-h-[400px] w-[300px] bg-black flex justify-center items-center transition-all duration-500 ease-in-out'>
+            <div className='relative z-10 '>
+                <div className=' absolute right-0 max-h-[400px] w-[300px] bg-cusgreen flex justify-center items-center transition-all duration-500 ease-in-out rounded-lg'>
                     <ul className='flex gap-5 flex-col py-2'>
-                        {logedin && <li className='text-cusgreen font-medium hover:text-black'>
+                        {logedin && <li className='text-white font-medium hover:text-black'>
                             <div className='flex flex-row gap-5 items-center'>
-                                <img className='max-w-[50px] rounded-[50%]' src={user_image} alt="" />
+                                <img className='max-w-[40px] rounded-[50%]' src={user_image} alt="" />
                                 <p>{logedin}</p>
                             </div>
                         </li>}
-                        <li className='text-cusgreen font-medium hover:text-white'><Link to="/Home">Home</Link></li>
-                        {admin && <li className='text-cusgreen font-medium hover:text-white'><Link to="/adminDashboard">Dashboard</Link></li>}
-                        <li className='text-cusgreen font-medium hover:text-white'><Link to="/product">Product</Link></li>
-                        {!logedin && <li className='text-cusgreen font-medium hover:text-white'><Link to="/">Login</Link></li>}
-                        {!logedin && <li className='text-cusgreen font-medium hover:text-white'><Link to="/signup">Sign up</Link></li>}
-                        {logedin && <li className='text-cusgreen font-medium hover:text-white' onClick={Logout}>Logout</li>}
+                        <li className='text-white font-medium'><Link to="/Home">Home</Link></li>
+                        {admin && <li className='text-white font-medium'><Link to="/adminDashboard">Dashboard</Link></li>}
+                        <li className='text-white font-medium'><Link to="/product">Product</Link></li>
+                        {!logedin && <li className='text-white font-medium'><Link to="/">Login</Link></li>}
+                        {!logedin && <li className='text-white font-medium'><Link to="/signup">Sign up</Link></li>}
+                        {logedin && <li className='text-white font-medium' onClick={Logout}>Logout</li>}
                         {/* {admin && <li><Link to="/admin">Admin</Link></li>} */}
                     </ul>
                 </div>

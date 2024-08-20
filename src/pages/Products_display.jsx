@@ -78,7 +78,7 @@ export default function Products_display() {
             {refresh_tokne && users && (
                 <div className='all_outer_product_data'>
                     {user_exist && <Createitem data={users} />}
-                    <div className='outer_product_data'>
+                    <div className='flex flex-row gap-10 pt-10 flex-wrap pl-5'>
                         {product_list}
                     </div>
                 </div>

@@ -33,29 +33,31 @@ export default function AdminDashboard() {
             <div>
                 <Navbar />
             </div>
-            {admin && <div className={`table ${cartToggled ? 'blur' : ''}`}>
-                <h1>inside dashboard</h1>
-                {isLoading ? (<p>loading</p>
-                ) : <table >
-                    <thead>
-                        <tr>
-                            <th>Users id</th>
-                            <th>Users name</th>
-                            <th>Users email</th>
+            <div className="flex items-center justify-center w-full">
+                {admin && <div className={`flex flex-col w-[75%]${cartToggled ? 'blur' : ''}`}>
+                    <h1 className="text-center font-bold">User Data</h1>
+                    {isLoading ? (<p>loading</p>
+                    ) : <table >
+                        <thead className="bg-cusgreen">
+                            <tr>
+                                <th className="text-white">Users id</th>
+                                <th className="text-white">Users name</th>
+                                <th className="text-white">Users email</th>
 
-                        </tr>
-                    </thead >
-                    <tbody>
-                        {user_cred ? user_cred.map((user, index) => {
-                            return (<tr key={index}>
-                                <td>{user.id}</td>
-                                <td>{user.username}</td>
-                                <td>{user.email}</td>
-                            </tr>)
-                        }) : <td>no data</td>}
-                    </tbody>
-                </table>}
-            </div>}
+                            </tr>
+                        </thead >
+                        <tbody>
+                            {user_cred ? user_cred.map((user, index) => {
+                                return (<tr key={index} className="even:bg-gray-200">
+                                    <td>{user.id}</td>
+                                    <td>{user.username}</td>
+                                    <td>{user.email}</td>
+                                </tr>)
+                            }) : <td>no data</td>}
+                        </tbody>
+                    </table>}
+                </div>}
+            </div>
             {!admin && <div>
                 <p>You must be an admin to access this page</p>
             </div>}

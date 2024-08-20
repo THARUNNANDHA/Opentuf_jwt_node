@@ -24,17 +24,19 @@ export default function Productdisplaycard(props) {
         setCartItems(updatedCart)
     }
     return (
-        <div className="outer_Productdisplaycard">
-            <div className='card_Productdisplaycard'>
+        <div className="">
+            <div className='flex flex-col shadow-lg min-w-72'>
                 {props.admin && < div >
                     <Deleteitem id={props.id} />
                     <Updateitems data={props} />
                 </div>}
-                <img src={props.src} alt="" />
-                <h2>{props.heading}</h2>
-                <p>{props.para}</p>
-                <strong><p>Price: {props.price}</p></strong>
-                <button onClick={() => addItemCart(props)}>Add to cart</button>
+                <div className='w-full  mt-4'>
+                    <img className="max-h-56 object-cover" src={props.src} alt="" />
+                </div>
+                <h2 className='text-center'>{props.heading}</h2>
+                <p className='text-center'>{props.para}</p>
+                <strong><p className='text-center'>Price: {props.price}</p></strong>
+                <button className='text-center w-full bg-cusgreen' onClick={() => addItemCart(props)}>Add to cart</button>
             </div>
 
         </div >
