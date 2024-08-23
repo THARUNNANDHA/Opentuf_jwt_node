@@ -19,6 +19,6 @@ export default function Deleteitem(props) {
         }
     }
     return (
-        <button className="del_button" onClick={del_id}>Delete</button>
+        <button className="bg-cusgreen text-white px-1 rounded-md hover:text-black hover:bg-gray-300" onClick={del_id}>Delete</button>
     )
 }

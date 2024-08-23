@@ -57,7 +57,7 @@ export default function Createitem(props) {
 
     return (
         <div className='create_outer_form'>
-            <button onClick={toggleForm} className="create_btn">Create Item</button>
+            <button onClick={toggleForm} className="create_btn hover:text-black hover:bg-gray-300">Create Item</button>
             {showForm && (
                 <div className='outer_create_form'>
 

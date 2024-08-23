@@ -36,7 +36,7 @@ export default function Updateitems(props) {
     }
     return (
         <div>
-            <button onClick={toggleform} className="update_btn">update</button>
+            <button onClick={toggleform} className="absolute bg-cusgreen text-white px-1 rounded-md top-0 left-16 hover:text-black hover:bg-gray-300">update</button>
             <div className='outer_update_form'>
                 {toggle_form &&
                     <form onSubmit={handlesubmit} className="create_update_form">

@@ -1,89 +1,42 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import { useAuth } from '../context/authContext';
-import signin_img from "../assets/images/Sign_in_amico.png";
-import GoogleSignin from "../hooks/GoogleSignin";
-import api from '../services/api';
+import React from "react";
+import "../assets/css/App.css";
+import { useAuth } from "../context/authContext";
+import Navbar from "../components/Navbar";
 
-function Trainingwithcss() {
-    const { cartToggled } = useAuth();
-    const [message, setMessage] = useState('');
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: ''
-    });
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(formData);
-
-        if (formData.username !== "" && formData.email !== "" && formData.password !== "") {
-            try {
-                const response = await api.signup('/signup', formData)
-                console.log('Response:', response);
-                if (response.data.success) {
-                    console.log(response.data.success);
-
-                    navigate('/');
-                }
-            }
-            catch (err) {
-                if (err.message === "Network Error") {
-                    console.log(err.message);
-                    setMessage(err.message);
-                }
-                else {
-                    console.log(err.response.data.fail);
-                    setMessage(err.response.data.fail);
-                }
-            }
-        }
-        else {
-            setMessage("fill all the data");
-        }
+export default function Cart() {
+    const { cartItems } = useAuth();
+    var totalprice = 0;
+    for (const [key, value] of cartItems.entries()) {
+        console.log(key + ": " + JSON.stringify(value));
     }
-
-    return (
-        <div>
-            <div>
-                <Navbar />
-            </div>
-            <div className={`flex justify-center items-center ${cartToggled ? 'blur' : ''}`}>
-                <div className='flex justify-center items-center flex-col md:flex-row gap-5 mt-20 self-center mx-20 w-full '>
-                    <div className='w-1/2 hidden md:block max-w-[500px] max-h-[500px] min-w-[400px] min-h-[400px]'>
-                        <img className='' src={signin_img} alt="" />
-                    </div>
-                    <div className=' shadow-custom-shadow w-full md:w-1/2 flex items-center justify-center flex-col bg-cusgreen px-2 py-5 mx-2 rounded-lg max-w-[400px] max-h-[400px] min-w-[330px]'>
-                        {message && <p className='text-red-600 font-bold'>{message}</p>}
-                        <h1 className="font-sans font-bold text-white text-3xl ">Sign_up</h1>
-                        <form onSubmit={handleSubmit}>
-                            <label className='font-sans'>Name:</label>
-                            <input type="text" name="username" value={formData.username} onChange={handleChange} />
-                            <label className='font-sans'>Email:</label>
-                            <input className='border-black' type="email" name="email" value={formData.email} onChange={handleChange} />
-                            <label className='font-sans'>Password</label>
-                            <input type="password" name="password" value={formData.password} onChange={handleChange} />
-                            <button type="submit">Submit</button>
-                        </form>
-                        <div className='google_signin'>
-                            <GoogleSignin />
-                        </div>
-                    </div>
+    const product = Array.from(cartItems).map(([key, value]) => {
+        totalprice += value.props.price * value.count;
+        return (
+            <div className="flex flex-col sm:flex-row gap-5 sm:gap-10 shadow-lg mt-5 p-4 sm:p-6" key={key}>
+                <img className="w-32 h-32 sm:max-w-40 sm:max-h-40 object-cover" src={value.props.src} alt="" />
+                <div className="flex flex-col justify-center">
+                    <p className="text-lg sm:text-xl">{value.props.heading}</p>
+                    <p className="text-sm sm:text-base">Quantity: {value.count}</p>
                 </div>
             </div>
-
-        </div >
-    );
+        )
+    })
+    return (
+        <div>
+            <div><Navbar /></div>
+            <div className="flex flex-col lg:flex-row items-center justify-center mt-5 gap-5 px-4 lg:px-0">
+                <div className="shadow-lg flex flex-col items-center justify-between w-full md:w-[60%] overflow-y-auto max-h-[600px] p-4 relative">
+                    <p className="text-lg sm:text-xl">Cart</p>
+                    {product}
+                    <div className="absolute bottom-0 w-full bg-white p-4">
+                        <p className="text-lg sm:text-xl font-semibold">Total: {totalprice}</p>
+                    </div>
+                </div>
+                <div className="shadow-lg flex flex-col items-center justify-center w-full lg:w-[30%] bg-gray-200 min-h-[450px] max-h-[600px] p-4">
+                    <p className="text-lg sm:text-xl">tharun</p>
+                </div>
+            </div>
+        </div>
+    )
 }
-
-export default Trainingwithcss;
