@@ -27,6 +27,7 @@ module.exports = {
       },
       boxShadow: {
         'custom-shadow': '0 8px 30px 0 #262626',
+        'custom-shadow1': '0 3px 4px 0 #262626',
       }
 
     },

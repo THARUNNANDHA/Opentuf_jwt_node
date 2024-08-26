@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/App.css";
-import { useAuth } from "../context/authContext";
+import { useCart } from '../context/CartProvider';
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +10,7 @@ export default function Cart() {
     const navigate = useNavigate();
     const [promoinput, setPromoinput] = useState();
     const [promodis, setPromodis] = useState(0);
-    const { cartItems, setCartItems } = useAuth();
+    const { cartItems, setCartItems, cartCount, setcartCount } = useCart();
     var totalprice = 0;
     var num_prod = 0;
     var gst = 0
@@ -21,6 +21,20 @@ export default function Cart() {
     const [promo, setPromo] = useState(0);
 
     useEffect(() => {
+        // console.log(localStorage.getItem('cart'))
+        // console.log(cartItems == null)
+        // console.log(cartItems.size === 0)
+        if (cartItems.size === 0) {
+            console.log("cart null");
+            const cartItems_storage = localStorage.getItem('cart')
+            // console.log(cartItems_storage.length)
+            if (cartItems_storage && cartItems_storage.length !== 2) {
+                console.log("cart_fetched");
+                const parsedMap = new Map(JSON.parse(localStorage.getItem('cart')));
+                // console.log(parsedMap)
+                setCartItems(parsedMap)
+            }
+        }
         // cartItems.forEach((value) => {
 
         //     console.log(promodis)
@@ -39,9 +53,19 @@ export default function Cart() {
         const item = newCartItems.get(id)
         if (item) {
             item.count += val;
+            // console.log(item.count)
             if (item.count > 0) newCartItems.set(id, item);
             else newCartItems.delete(id);
             setCartItems(newCartItems)
+            var count_of_items = 0;
+            for (const [key, value] of newCartItems.entries()) {
+                count_of_items += value.count;
+            }
+            setcartCount(count_of_items)
+            const serializedCartItems = JSON.stringify(Array.from(newCartItems.entries()));
+            // console.log(serializedCartItems)
+            localStorage.setItem('cart', serializedCartItems)
+            localStorage.setItem('cartCount', count_of_items)
         }
     }
 

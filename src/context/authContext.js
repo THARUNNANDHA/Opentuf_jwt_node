@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import api from "../services/api";
-
+import { useCart } from "./CartProvider";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState(new Map());
+    // const [cartItems, setCartItems] = useState(new Map());
     const [accesstoken, setaccesstoken] = useState(null);
     const [cartToggled, setCartToggled] = useState(false);
+    const { cartItems, setCartItems } = useCart();
+
     const login = async (credentials) => {
         try {
             const response = await api.login(credentials);
@@ -32,9 +34,32 @@ export const AuthProvider = ({ children }) => {
     }
 
     const logout = async () => {
+
         // localStorage.removeItem('accessToken');
         // const respons = await api.logout();
         // console.log(respons.data.success)
+        const user = localStorage.getItem('user');
+        console.log(cartItems)
+        console.log(cartItems.size)
+        try {
+            if (cartItems.size === 0) {
+                if (localStorage.getItem('cart')) {
+                    const cart = localStorage.getItem('cart')
+                    console.log(cart)
+                    const response = await api.cart("/cart_update", { "user": user, "map": cart })
+                }
+            }
+            else {
+                const serializedCartItems = JSON.stringify(Array.from(cartItems.entries()));
+                const response = await api.cart("/cart_update", { "user": user, "map": serializedCartItems })
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+
+        localStorage.removeItem('cartCount');
+        localStorage.removeItem('cart');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
         localStorage.removeItem('user_image');
@@ -63,8 +88,8 @@ export const AuthProvider = ({ children }) => {
             if (err.response) {
                 console.log(err.response.data)
                 if (err.response.data.error) {
+                    await logout()
                     window.location.replace('/');
-                    logout()
                     console.log("hear")
                 }
             }
@@ -152,7 +177,7 @@ export const AuthProvider = ({ children }) => {
         // response = await api.googlelogin(google_res)
     }
     return (
-        <AuthContext.Provider value={{ cartItems, setCartItems, cartToggled, setCartToggled, login, logout, accesstoken, refreshAccessToken, fetchdata, setaccesstoken, googlelogin }}>
+        <AuthContext.Provider value={{ cartToggled, setCartToggled, login, logout, accesstoken, refreshAccessToken, fetchdata, setaccesstoken, googlelogin }}>
             {children}
         </AuthContext.Provider>
     )

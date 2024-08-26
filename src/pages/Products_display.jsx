@@ -78,7 +78,7 @@ export default function Products_display() {
             {refresh_tokne && users && (
                 <div className='all_outer_product_data w-full px-4 sm:px-6 lg:px-8'>
                     {user_exist && <Createitem data={users} />}
-                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 pt-10'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8'>
                         {product_list}
                     </div>
                 </div>

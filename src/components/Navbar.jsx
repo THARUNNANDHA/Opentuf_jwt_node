@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { googleLogout } from '@react-oauth/google';
 import "../assets/css/App.css";
@@ -9,11 +9,13 @@ import { useAuth } from '../context/authContext';
 import cartImg from "../assets/images/cart_icon.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { useCart } from '../context/CartProvider';
 
 export default function Navbar() {
     const navigate = useNavigate()
     const [menu, setMenu] = useState(false)
     const { logout, cartToggled, setCartToggled, cartItems } = useAuth();
+    const { cartCount, setcartCount } = useCart();
     var logedin = localStorage.getItem("user");
     var user_image = localStorage.getItem("user_image");
     // console.log(user_image)/
@@ -24,7 +26,13 @@ export default function Navbar() {
         // console.log(admin)
     }
 
-
+    useEffect(() => {
+        if (cartCount === 0) {
+            if (localStorage.getItem("cartCount")) {
+                setcartCount(localStorage.getItem("cartCount"))
+            }
+        }
+    }, [cartCount]);
     // console.log(user_data.email, user_data.password, user_data.name)
     // if (user_data.email !== "") {
     //     logedin = true;
@@ -141,7 +149,7 @@ export default function Navbar() {
                         </div>
                     </div>
                 }
-                {logedin && <div className='flex flex-row '>
+                {logedin && <div className='flex flex-row'>
                     <div className='hidden md:flex flex-row flex-end gap-2 p-2 pr-4'>
                         <img className="max-w-[40px] max-h-[40px] rounded-[50%]" src={user_image} alt="user_image" />
                         <button className='font-bold hover:underline5'>{logedin}</button>
@@ -149,8 +157,9 @@ export default function Navbar() {
                         {/* <Link to="/signup" className="cart_icon">Cart</Link> */}
                         {/* <img className="transition max-w-[50px] max-h-[50px] shadow-lg rounded-[50%] hover:cursor-pointer" onClick={setCart} src={cartImg} alt="cart" /> */}
                     </div>
-                    <div className='pr-6 pt-4 flex flex-row gap-2 items-center justify-center p-2'>
+                    <div className='pr-6 pt-4 flex flex-row gap-2 items-center justify-center p-2 relative'>
                         <img className="transition max-w-[50px] max-h-[50px] shadow-lg rounded-[50%] hover:cursor-pointer" onClick={() => { navigate("/cart") }} src={cartImg} alt="cart" />
+                        <p className='bg-blue-600 rounded-[50%] px-[5px] font-semibold text-white z-10 absolute top-2 right-4 text-sm'>{cartCount}</p>
                         <FontAwesomeIcon icon={faBars} className='block md:hidden text-cusgreen font-bold text-2xl hover:cursor-pointer shadow-lg ' onClick={Togglesidebar} />
                     </div>
                 </div>
